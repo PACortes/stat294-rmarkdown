@@ -1,0 +1,81 @@
+---
+title: "Sesion_08"
+author: "Pablo Cortes"
+date: "2/14/2022"
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE)
+```
+
+## R Packages
+
+```{r, echo=TRUE}
+library(ggplot2)
+library(gapminder)
+library(systemfonts)
+library(kableExtra)
+library(plotly)
+```
+
+## Formula
+
+$$\int_0^\infty e^{-x^2} dx=\frac{\sqrt{\pi}}{2}$$
+
+
+## Web link
+
+[R Markdown](https://rmarkdown.rstudio.com/)
+
+
+## gapminder
+
+```{r, warning=FALSE, results='hide'}
+data(gapminder)
+head(gapminder)
+summary(gapminder)
+```
+
+## kable  
+```{r}
+knitr::kable(head(gapminder),
+  caption = "First rows of the 'gapminder' data."
+)
+```
+
+## gapminder
+
+```{r, echo=FALSE}
+d <- gapminder[which(gapminder$year == 2007), ]
+knitr::kable(summary(d),
+  caption = "Summary of the `gapminder` data in 2007."
+)
+```
+
+## ggplot
+```{r pressure, fig.cap='Life expectancy versus GDP per capita in 2007.', fig.align='center'}
+g <- ggplot(d, aes(
+  x = gdpPercap, y = lifeExp,
+  color = continent, size = pop, ids = country
+)) +
+  geom_point(alpha = 0.5) +
+  ggtitle("") +
+  xlab("GDP per capita (US$)") +
+  ylab("Life expectancy (years)") +
+  scale_color_discrete(name = "Continent") +
+    scale_size_continuous(name = "Population")
+g
+
+```
+
+## ggplotly
+```{r, echo=FALSE, message=FALSE}
+ggplotly(g)
+```
+
+
